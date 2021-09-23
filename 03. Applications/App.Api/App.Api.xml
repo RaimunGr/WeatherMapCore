@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>App.Api</name>
+    </assembly>
+    <members>
+        <member name="M:App.Api.Admin.Api.Controllers.WeatherMapController.Schedule(Infra.ApplicationServices.Commands.WeatherMapAggregate.ScheduleWeatherMapCommand)">
+            <summary>
+            Schedule weather map for the requested latitude and longitude pair.
+            </summary>
+            <param name="command"></param>
+            <returns>Token</returns>
+        </member>
+    </members>
+</doc>

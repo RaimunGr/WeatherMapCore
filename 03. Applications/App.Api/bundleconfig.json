@@ -1,0 +1,14 @@
+[
+  {
+    "outputFileName": "wwwroot/swagger-ui/swagger.min.css",
+    "inputFiles": [
+      "wwwroot/swagger-ui/swagger.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/swagger-ui/swagger.min.js",
+    "inputFiles": [
+      "wwwroot/swagger-ui/swagger.js"
+    ]
+  }
+]
