@@ -1,20 +1,20 @@
 using App.Api.Attributes;
 using App.Api.Swagger.Examples;
+using App.Api.Utility;
 using Hangfire;
 using Hangfire.SqlServer;
 using Infra.ApplicationServices;
+using Infra.ApplicationServices.Utility.Http.Authentication.Implementations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.IO;
-using System.Text;
 using System.Text.Json.Serialization;
 
 namespace App.Api.Admin.Api
@@ -37,6 +37,7 @@ namespace App.Api.Admin.Api
                 Configuration.GetValue<string>("OpenWeatherMap:BaseAddress"),
                 Configuration.GetValue<string>("OpenWeatherMap:ApiKey")
             );
+            services.AddAuthenticationApi(Configuration.GetValue<string>("Auth:BaseAddress"));
 
             services.AddControllers(opt => opt.Filters.Add<AuthenticationExceptionFilterAttribute>())
                 .AddJsonOptions(x =>
@@ -81,25 +82,16 @@ namespace App.Api.Admin.Api
 
             services.AddSwaggerExamplesFromAssemblyOf<ScheduleWeatherMapCommandExample>();
 
-            //services.AddAuthentication(x =>
-            //{
-            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(x =>
-            //{
-            //    var secret = TokenSecretExtractor.Extract(Configuration);
-            //    var secretBytes = Encoding.ASCII.GetBytes(secret);
-            //    var securityKey = new SymmetricSecurityKey(secretBytes);
-
-            //    x.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuerSigningKey = true,
-            //        ValidateLifetime = true,
-            //        ValidAudience = TokenHandler.AUDIENCE,
-            //        ValidIssuer = TokenHandler.ISSUER,
-            //        IssuerSigningKey = securityKey
-            //    };
-            //});
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.SecurityTokenValidators.Clear();
+                var baseAddress = Configuration.GetValue<string>("Auth:BaseAddress");
+                x.SecurityTokenValidators.Add(new RaimunSecurityTokenValidator(new AuthService(baseAddress)));
+            });
 
             services.AddHangfire(cfg => cfg
                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)

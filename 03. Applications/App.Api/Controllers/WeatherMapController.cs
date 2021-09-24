@@ -2,6 +2,7 @@
 using App.Api.Swagger.Examples;
 using Infra.ApplicationServices.Commands.WeatherMapAggregate;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Filters;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace App.Api.Admin.Api.Controllers
         /// <param name="command"></param>
         /// <returns>Token</returns>
         [HttpPost]
+        [Authorize]
         [SwaggerRequestExample(typeof(ScheduleWeatherMapCommand), typeof(ScheduleWeatherMapCommandExample))]
         public async Task<IActionResult> Schedule(ScheduleWeatherMapCommand command)
         {

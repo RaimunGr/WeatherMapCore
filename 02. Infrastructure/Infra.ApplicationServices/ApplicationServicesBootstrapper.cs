@@ -1,4 +1,6 @@
 ﻿using Infra.ApplicationServices.Commands.WeatherMapAggregate;
+using Infra.ApplicationServices.Utility.Http.Authentication.Abstractions;
+using Infra.ApplicationServices.Utility.Http.Authentication.Implementations;
 using Infra.ApplicationServices.Utility.Http.OpenWeatherMap.Abstractions;
 using Infra.ApplicationServices.Utility.Http.OpenWeatherMap.Implementations;
 using Infra.ApplicationServices.Utility.MessageQueuing.Abstractions;
@@ -13,6 +15,14 @@ namespace Infra.ApplicationServices
         public static void AddApplicationServices(this IServiceCollection services)
         {
             services.AddMediatR(typeof(ScheduleWeatherMapCommand).Assembly);
+        }
+
+        public static void AddAuthenticationApi(this IServiceCollection services, string baseAddress)
+        {
+            services.AddScoped<IAuthService, AuthService>(p =>
+            {
+                return new AuthService(baseAddress);
+            });
         }
 
         public static void AddOpenWeatherMapApi(this IServiceCollection services, string baseAddress, string apiKey)
