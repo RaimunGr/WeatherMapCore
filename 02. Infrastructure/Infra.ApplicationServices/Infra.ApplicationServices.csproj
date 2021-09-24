@@ -12,7 +12,7 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.25" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.25" />
     <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
-  </ItemGroup>
+</ItemGroup>
 
 <ItemGroup>
   <Folder Include="Queries\WeatherMapAggregate\" />
@@ -20,7 +20,7 @@
 </ItemGroup>
 
 <ItemGroup>
-  <ProjectReference Include="..\..\01. Core\Core.DomainModel\Core.DomainModel.csproj" />
+  <ProjectReference Include="..\Infra.Dal\Infra.Dal.csproj" />
 </ItemGroup>
 
 </Project>

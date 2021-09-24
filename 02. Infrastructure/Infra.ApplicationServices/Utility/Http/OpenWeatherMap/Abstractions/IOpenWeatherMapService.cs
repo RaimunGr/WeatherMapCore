@@ -1,4 +1,4 @@
-﻿using Core.DomainModel.WeatherMapAggregate;
+﻿using Core.DomainModel.WeatherMapAggregate.Entities;
 using System.Threading.Tasks;
 
 namespace Infra.ApplicationServices.Utility.Http.OpenWeatherMap.Abstractions

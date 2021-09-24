@@ -1,4 +1,4 @@
-﻿using Core.DomainModel.WeatherMapAggregate;
+﻿using Core.DomainModel.WeatherMapAggregate.Entities;
 using Refit;
 using System.Threading.Tasks;
 

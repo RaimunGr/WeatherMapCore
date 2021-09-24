@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Core.DomainModel.WeatherMapAggregate
+namespace Core.DomainModel.WeatherMapAggregate.Entities
 {
     public sealed class WeatherMap
     {

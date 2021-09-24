@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Core.DomainModel.WeatherMapAggregate
+namespace Core.DomainModel.WeatherMapAggregate.Entities
 {
     public sealed class MainInfo
     {

@@ -5,6 +5,7 @@ using Hangfire;
 using Hangfire.SqlServer;
 using Infra.ApplicationServices;
 using Infra.ApplicationServices.Utility.Http.Authentication.Implementations;
+using Infra.Dal;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace App.Api.Admin.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDataAccessLayer(Configuration.GetConnectionString("WeatherMapLog"));
             services.AddApplicationServices();
             services.AddMessageQueuing(Configuration.GetValue<string>("MessageQueuing:AmqpUri"));
             services.AddOpenWeatherMapApi(
@@ -122,6 +124,8 @@ namespace App.Api.Admin.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseDatabase();
 
             app.UseFileServer();
 
